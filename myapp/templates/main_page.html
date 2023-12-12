@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock %}</title>
+</head>
+<style>
+
+    body{
+        margin-top: 0px;
+    }
+li{
+    list-style: none;
+    display: inline;
+    margin-left: 10px;
+}
+li a{
+    text-decoration: none;
+    color: grey;
+}
+.navbar{
+    margin-top: 0px;
+    width: 100%;
+    box-shadow: 2px 3px 1px rgb(190, 190, 190);
+}
+.link_page:hover{
+    color: black;
+}
+.table{
+    margin-top: 50px;
+    border: 2px solid rgb(133, 133, 133);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px lightblue;
+}
+.btn_acc{
+    width: 90%;
+    padding: 7px;
+    background-color: rgb(0, 255, 170);
+    border-radius: 8px;
+    border: 0.7px solid rgb(72, 205, 250); 
+    box-shadow: 2px 2px 5px lawngreen;
+}
+.btn_acc:hover{
+    background-color: rgb(0, 150, 150);
+}
+.th{
+    padding-top: 20px;
+}
+.in_put input{
+    width: 90%;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+
+
+
+.card{
+    background-color: bisque;
+    margin-left: 15px;
+    margin-top: 20px;
+    width: 30%;
+    height: 400px;
+    box-shadow: 3px 5px 5px rgb(201, 199, 199);
+    float: left;
+}
+
+
+</style>
+<body>
+    <div class="navbar">
+        <ul >
+            <li class="page"><a class="link_page" href="/home/">Home</a></li>
+            <li class="page"><a class="link_page" href="/my_thoughts/">Your blog</a></li>
+            <li class="page"><a class="link_page" href="/thoughts/">Create blog</a></li>
+            <li class="page"><a class="link_page" href="{% url 'logout' %}">LogOut/<span>{{uname}}</span></a></li>
+        </ul>
+    </div>
+    {% block content %}
+    {% for i in data %}
+<div class="card">
+    <h3>Username: {{i.user}}</h3>
+    <h4><b>{{i.title}}</b></h4>
+    <img src="{{i.get_Image_url}}" alt="{{uname}}" style="width:5%; height:8%;">
+    <div class="container">
+        <p>{{i.content}}</p>
+    </div>
+  </div>
+{% endfor %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends 'main_page.html' %}
+{% block title %} Create blog {% endblock %}
+{% block content %}
+<div class="create_blog">
+    <table class="table">
+        <form action="" method="get" enctype="multipart/form-data">
+            {% for fm in form %}
+         {{fm.label_tags}}
+
+        <th class="th">{{fm.label}}</th> 
+        <th  class="th in_put"> {{fm}}</th>
+    </tr>    
+    {% endfor %}
+            <br>
+          <tr> <th class="th" colspan="2"><input type="submit" value="Post" class="btn_acc"/></th>
+          </tr>  
+        </form>
+        </table>
+</div>
+{% endblock %}

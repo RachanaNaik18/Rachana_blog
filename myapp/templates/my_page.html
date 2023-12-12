@@ -1,0 +1,14 @@
+{% extends 'main_page.html' %}
+{% block title %} Your thoughts {% endblock %}
+{% block content %}
+{% for i in data %}
+<div class="card">
+    <h3>Username: {{uname}}</h3>
+    <h4><b>{{i.title}}</b></h4>
+    <img src="{{i.get_Image_url}}" alt="{{uname}}" style="width:5%; height:8%;">
+    <div class="container">
+        <p>{{i.content}}</p>
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}
