@@ -25,9 +25,12 @@ urlpatterns = [
     path('home/', views.Home, name='home'),
     path('thoughts/', views.Creation, name='thoughts'),
     path('my_thoughts/', views.my_page, name="my_thoughts"),
+    path('update/<int:id>', views.update, name='update'),
+    path("<int:id>", views.delete, name='delete'),
     path('signup/', views.Signup, name='signup'),
     path('login/', views.Login, name='Login'),
     path('logout/', views.Logout, name='logout'),
+    path('posts/<int:id>', views.Comment_detail, name='posts')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

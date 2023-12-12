@@ -5,10 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Home{% endblock %}</title>
 </head>
+<link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
 <style>
 
     body{
         margin-top: 0px;
+    }
+    a{
+        text-decoration: none;
+        color: black;
     }
 li{
     list-style: none;
@@ -68,7 +78,29 @@ li a{
     box-shadow: 3px 5px 5px rgb(201, 199, 199);
     float: left;
 }
+.card:hover{
+background-color: rgb(255, 184, 97);
+    }
+    .in-line{
+        display: flex;
+        direction: column;
+        margin-top: 2px;
+        width: 100%;
+        padding: 5px;
+    }
+    .in-line:hover{
+        background-color: aqua;
+    }
 
+    .card-body{
+    background-color: bisque;
+    margin-left: 15px;
+    margin-top: 20px;
+    width: 30%;
+    height: 400px;
+    box-shadow: 3px 5px 5px rgb(201, 199, 199);
+    float: left;
+    }
 
 </style>
 <body>
@@ -82,7 +114,7 @@ li a{
     </div>
     {% block content %}
     {% for i in data %}
-<div class="card">
+<a class="anchor"   href="{% url 'posts' i.id %}"><div class="card">
     <h3>Username: {{i.user}}</h3>
     <h4><b>{{i.title}}</b></h4>
     <img src="{{i.get_Image_url}}" alt="{{uname}}" style="width:5%; height:8%;">
@@ -90,6 +122,7 @@ li a{
         <p>{{i.content}}</p>
     </div>
   </div>
+</a>
 {% endfor %}
     {% endblock %}
 </body>

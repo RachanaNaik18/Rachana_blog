@@ -9,6 +9,13 @@
     <div class="container">
         <p>{{i.content}}</p>
     </div>
+    <a href="{% url 'update' i.id %}" class="in-line">Update</a></td>
+
+  <form action="{% url 'delete' i.id %}" method="post" enctype="multipart/form-data" class="in-line">
+  {% csrf_token %}
+  <input type="submit" value="Delete" />
+  </form>
   </div>
+  
 {% endfor %}
 {% endblock %}

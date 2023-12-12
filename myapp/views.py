@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from .models import Blog
 from django.contrib import messages
-from .forms import blog_form, signup_form
+from .forms import blog_form, signup_form, Comment_form
 from django.contrib.auth import get_user ,authenticate, login, logout
 # Create your views here.
 def Home(request):
@@ -62,4 +62,38 @@ def Logout(request):
     logout(request)
     return HttpResponseRedirect('/login/')
 
+def Comment_detail(request, id):
+    post = Blog.objects.get(pk = id)
+    comments = post.comments.filter(active=True)
+    new_comment = None
+    if request.method == "POST":
+        comment_data = Comment_form(request.POST, instance=post)
+        uname = request.user
+        fm = blog_form(initial={'user':uname})
+        if comment_data.is_valid():
+            new_comment = comment_data.save()
+    else:
+        comment_data = Comment_form(instance=post)
+    
+    return render(request, 'post.html', {'post': post, 'comments':comments, 'new_comment':new_comment, 'comment_data': comment_data})
 
+def update(request, id):
+    if request.method == "POST":
+        pi = Blog.objects.get(pk = id)
+        fm = blog_form(request.POST, instance=pi)
+
+        if fm.is_valid():
+            fm.save()
+            messages.success(request, "Data Updated Successfully...")
+
+    else:
+        pi = Blog.objects.get(pk = id)
+        fm = blog_form(request.POST, instance=pi)
+    return render(request, "update.html", {'form1':fm})
+
+def delete(request, id):
+    if request.method == "POST":
+        pi = Blog.objects.get(pk = id)
+        pi.delete()
+        messages.success(request, "Data Deleted Successfully...")
+        return HttpResponseRedirect("home/")

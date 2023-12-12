@@ -1,0 +1,42 @@
+{% extends 'main_page.html' %}
+{% block title %} Post {% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row card">
+    <h3>Username: {{post.user}}</h3>
+    <h4><b>{{post.title}}</b></h4>
+    <img src="{{i.get_Image_url}}" alt="{{uname}}" style="width:5%; height:8%;">
+    <div class="container">
+        <p>{{post.content}}</p>
+    </div>
+    </div>
+  </div>
+
+<div class="row">
+{% for comment in comments %}
+<div class="comments" style="padding: 10px;">
+<p>
+    {{comment.user}}
+</p>
+{{comment.body | linebreaks }}
+</div>
+{% endfor %}
+</div>
+<div class="row">
+    <div class="card-body">
+        {% if new_comment %}
+        <div class="alert" role="alert">
+            Your commnet is awaiting moderation
+        </div>
+        {% else %}
+        <h3>Leave  comment </h3>
+        <form action="" method="post">
+            {{ comment_data.as_p }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
