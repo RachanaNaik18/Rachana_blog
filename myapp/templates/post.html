@@ -14,16 +14,6 @@
   </div>
 
 <div class="row">
-{% for comment in comments %}
-<div class="comments" style="padding: 10px;">
-<p>
-    {{comment.user}}
-</p>
-{{comment.body | linebreaks }}
-</div>
-{% endfor %}
-</div>
-<div class="row">
     <div class="card-body">
         {% if new_comment %}
         <div class="alert" role="alert">
@@ -32,8 +22,9 @@
         {% else %}
         <h3>Leave  comment </h3>
         <form action="" method="post">
-            {{ comment_data.as_p }}
             {% csrf_token %}
+            Username: <input type="text" value="{{uname}}">
+            Comment: <input type="text" name="comment" /> 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         {% endif %}

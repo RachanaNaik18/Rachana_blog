@@ -1,8 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect
-from .models import Blog
+from .models import Blog,Comment
 from django.contrib import messages
 from .forms import blog_form, signup_form, Comment_form
-from django.contrib.auth import get_user ,authenticate, login, logout
+from django.contrib.auth import get_user, authenticate, login, logout
 # Create your views here.
 def Home(request):
     os = Blog.objects.all()
@@ -45,6 +45,7 @@ def Signup(request):
             sf = signup_form()
     else:
         sf = signup_form()
+    
     return render(request, "signup.html", {'form':sf})
 
 def Login(request):
@@ -63,20 +64,20 @@ def Logout(request):
     return HttpResponseRedirect('/login/')
 
 def Comment_detail(request, id):
-    post = Blog.objects.get(pk = id)
-    comments = post.comments.filter(active=True)
-    new_comment = None
-    if request.method == "POST":
-        comment_data = Comment_form(request.POST, instance=post)
+    if request.user_is.authenticate:
+        post = Blog.objects.get(pk = id)
         uname = request.user
-        fm = blog_form(initial={'user':uname})
-        if comment_data.is_valid():
-            new_comment = comment_data.save()
-    else:
-        comment_data = Comment_form(instance=post)
-    
-    return render(request, 'post.html', {'post': post, 'comments':comments, 'new_comment':new_comment, 'comment_data': comment_data})
+        comments = post.comments.filter(active=True)
+        new_comment = None
+        if request.method == "POST":
+            comment_data = Comment_form(request.POST, instance=post)
 
+            comment = request.POST.get('comment')
+            Comment.objects.create(body=comment,user=request.user)
+            
+        return render (request, 'post.html', {'post':post, 'comments':comments})
+    else:
+        return HttpResponseRedirect('/login/')
 def update(request, id):
     if request.method == "POST":
         pi = Blog.objects.get(pk = id)
